@@ -18,6 +18,9 @@ class OneSignalMessage
     /** @var string */
     protected $icon;
 
+    /** @var string */
+    protected $taskId;
+
     /** @var array */
     protected $data = [];
 
@@ -179,6 +182,17 @@ class OneSignalMessage
     }
 
     /**
+     * set taskId to data
+     * @return string
+     */
+    public function taskId($value)
+    {
+        $this->taskId = $value;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -194,6 +208,10 @@ class OneSignalMessage
             'adm_small_icon' => $this->icon,
             'small_icon' => $this->icon,
         ];
+
+        if ($this->taskId) {
+            $message['data'] = ['taskId' => $this->taskId];
+        }
 
         foreach ($this->extraParameters as $key => $value) {
             Arr::set($message, $key, $value);
